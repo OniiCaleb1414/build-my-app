@@ -1,10 +1,13 @@
-import { Bell, Search, Menu, X, MapPin, Plus } from "lucide-react";
+import { Bell, Search, Menu, X, MapPin, Plus, User, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, profile, loading } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -38,6 +41,28 @@ export function Navbar() {
               <MapPin className="w-4 h-4" />
               Set Location
             </Button>
+            
+            {!loading && (
+              user ? (
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => navigate("/profile")}
+                  className="flex items-center gap-2"
+                >
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-critical flex items-center justify-center text-primary-foreground text-xs font-bold">
+                    {profile?.full_name ? profile.full_name.charAt(0).toUpperCase() : "U"}
+                  </div>
+                  <span className="hidden lg:inline">{profile?.full_name || "Profile"}</span>
+                </Button>
+              ) : (
+                <Button size="sm" onClick={() => navigate("/auth")}>
+                  <LogIn className="w-4 h-4 mr-1" />
+                  Sign In
+                </Button>
+              )
+            )}
+            
             <Button size="sm">
               <Plus className="w-4 h-4" />
               Report
@@ -65,6 +90,20 @@ export function Navbar() {
               <MobileNavLink href="/alerts" onClick={() => setIsOpen(false)}>Active Alerts</MobileNavLink>
               <MobileNavLink href="/map" onClick={() => setIsOpen(false)}>Alert Map</MobileNavLink>
               <MobileNavLink href="/about" onClick={() => setIsOpen(false)}>About</MobileNavLink>
+              
+              {!loading && (
+                user ? (
+                  <MobileNavLink href="/profile" onClick={() => setIsOpen(false)}>
+                    <User className="w-4 h-4 mr-2 inline" />
+                    My Profile
+                  </MobileNavLink>
+                ) : (
+                  <MobileNavLink href="/auth" onClick={() => setIsOpen(false)}>
+                    <LogIn className="w-4 h-4 mr-2 inline" />
+                    Sign In
+                  </MobileNavLink>
+                )
+              )}
             </div>
             <div className="flex gap-2 pt-2 border-t border-border">
               <Button variant="outline" className="flex-1" size="sm">
