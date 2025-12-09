@@ -4,14 +4,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+        default: "border-transparent bg-primary text-primary-foreground",
+        secondary: "border-transparent bg-secondary text-secondary-foreground",
+        destructive: "border-transparent bg-destructive text-destructive-foreground",
         outline: "text-foreground",
+        active: "border-transparent bg-primary/15 text-primary font-bold uppercase tracking-wide",
+        critical: "border-transparent bg-critical/15 text-critical font-bold uppercase tracking-wide animate-pulse",
+        resolved: "border-transparent bg-success/15 text-success font-bold uppercase tracking-wide",
+        expired: "border-transparent bg-muted text-muted-foreground font-bold uppercase tracking-wide",
+        missing: "border-primary/30 bg-primary/10 text-primary",
+        endangered: "border-critical/30 bg-critical/10 text-critical",
+        abduction: "border-critical/30 bg-critical/10 text-critical",
       },
     },
     defaultVariants: {
